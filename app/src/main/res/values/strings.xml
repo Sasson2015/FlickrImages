@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Flickr Images</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_show_images">ShowImagesActivity</string>
+    <string name="flickr_app_key">0d9d48706888a63204ff1895ea0e6de3</string>
+    <string name="flickr_app_secret">537b80be29e40349</string>
+    <color name="blue">#0000FF</color>
+    <color name="white">#FFFAF0</color>
+
+    <string-array name="country_name_arrays">
+        <item>Israel</item>
+        <item>Argentina</item>
+        <item>Brazil</item>
+        <item>Canada</item>
+        <item>Colombia</item>
+        <item>Netherlands</item>
+        <item>Peru</item>
+        <item>Japan</item>
+        <item>South Africa</item>
+        <item>United State</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Flickr Images</string>
+    <string name="action_settings">הגדרות</string>
+    <string name="hello_world">שלום עולם!</string>
+
+    <string-array name="country_name_arrays">
+        <item>Israel</item>
+        <item>Argentina</item>
+        <item>Brazil</item>
+        <item>Canada</item>
+        <item>Colombia</item>
+        <item>Netherlands</item>
+        <item>Peru</item>
+        <item>Japan</item>
+        <item>South Africa</item>
+        <item>United State</item>
+    </string-array>
+
+</resources>
