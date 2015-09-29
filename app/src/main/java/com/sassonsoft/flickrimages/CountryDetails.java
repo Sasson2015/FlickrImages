@@ -54,6 +54,4 @@ public class CountryDetails {
         for (int i = 0; i < flags.length; i++)
             flagImage.add(flags[i]);
     }
-
-
 }

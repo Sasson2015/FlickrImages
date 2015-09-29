@@ -48,6 +48,9 @@ public class ShowImagesActivity extends AppCompatActivity {
 
         initializeVariables();
 
+        adapter = new CustomGridViewAdapter(ShowImagesActivity.this, R.layout.grid_item_layout, imageItems);
+        gridView.setAdapter(adapter);
+
         new GetImagesDetailsFromServer().execute("https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + Consts.FLICKR_APP_KEY + "&tags=" + countryName + "&format=json&nojsoncallback=1");
 
 
@@ -90,7 +93,7 @@ public class ShowImagesActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            return FlickrServerAction.getImageDetails(params[0], context);
+            return FlickrServerAction.getImageDetails(params[0]);
         }
 
         protected void onPostExecute(String result) {
@@ -134,8 +137,7 @@ public class ShowImagesActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
 
             imageItems.add(new ImageItem(bitmap, "Image #" + Integer.toString(imageItems.size() + 1)));
-            adapter = new CustomGridViewAdapter(ShowImagesActivity.this, R.layout.grid_item_layout, imageItems);
-            gridView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
 
 
         }

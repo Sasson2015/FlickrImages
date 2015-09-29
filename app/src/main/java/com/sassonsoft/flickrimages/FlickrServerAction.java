@@ -14,7 +14,7 @@ import java.net.URL;
  * Created by Sasson on 26/09/2015.
  */
 public class FlickrServerAction {
-    public static String getImageDetails(String urlString, Context context) {
+    public static String getImageDetails(String urlString) {
         BufferedReader reader = null;
         try {
             URL url = new URL(urlString);
