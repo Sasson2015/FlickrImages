@@ -8,23 +8,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    //אתחול משתנים
 
     private ListView countryListView;
-    private ImageView countryFlag;
-    private TextView countryName;
-
     private SimpleAdapter adapter;
     private List<Map<String, String>> countryList = new ArrayList<>();//רשימה שמכילה את כל התמונות והשמות של התמונות
     private Context context;
@@ -34,10 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initializeVariables(); //יצירת פונקציה להגדרה וקישור המשתנים
-
-        adapter = new SimpleAdapter(this, countryList, R.layout.layout_country_list_item, new String[]{"FLAG_IMAGE", "NAME"}, new int[]{R.id.ivFlag, R.id.tvCountryName});
-        countryListView.setAdapter(adapter);
+        initializeVariables();
 
         countryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -51,14 +41,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeVariables() {
         countryListView = (ListView) findViewById(R.id.lvCountry);
-        countryFlag = (ImageView) findViewById(R.id.ivFlag);
-        countryName = (TextView) findViewById(R.id.tvCountryName);
-
-        //יצירת מערך והשמה לתוך רשימהגם לתמונה וגם לשמות
         CountryDetails.setVariables(getBaseContext());
         CountryDetails.createList(countryList);
         context =getBaseContext();
 
+        adapter = new SimpleAdapter(this, countryList, R.layout.layout_country_list_item, new String[]{"FLAG_IMAGE", "NAME"}, new int[]{R.id.ivFlag, R.id.tvCountryName});
+        countryListView.setAdapter(adapter);
     }
 
 

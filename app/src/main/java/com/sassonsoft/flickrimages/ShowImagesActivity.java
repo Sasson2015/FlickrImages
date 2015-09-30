@@ -1,30 +1,24 @@
 package com.sassonsoft.flickrimages;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
-import android.util.Log;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ShowImagesActivity extends AppCompatActivity {
@@ -33,10 +27,7 @@ public class ShowImagesActivity extends AppCompatActivity {
     private String countryName;
     private GridView gridView;
     private Context context;
-    private ImageView iv;
     private CustomGridViewAdapter adapter;
-    private String jsonImgesDetails;
-
     private Bitmap bitmap = null;
     private URL url;
     private ArrayList<ImageItem> imageItems = new ArrayList<>();
@@ -47,23 +38,31 @@ public class ShowImagesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show_images);
 
         initializeVariables();
-
-        adapter = new CustomGridViewAdapter(ShowImagesActivity.this, R.layout.grid_item_layout, imageItems);
-        gridView.setAdapter(adapter);
-
-        new GetImagesDetailsFromServer().execute("https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + Consts.FLICKR_APP_KEY + "&tags=" + countryName + "&format=json&nojsoncallback=1");
-
-
+        if (checkIfOnline())
+            new GetImagesDetailsFromServer().execute("https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + Consts.FLICKR_APP_KEY + "&tags=" + countryName + "&format=json&nojsoncallback=1");
+        else
+            Toast.makeText(this, "Error: Networks isn't available", Toast.LENGTH_LONG).show();
     }
 
     private void initializeVariables() {
         extras = getIntent().getExtras();
         context = getBaseContext();
         gridView = (GridView) findViewById(R.id.gridView);
+
         if (extras != null)
             countryName = extras.getString("COUNTRY_NAME");
 
+        adapter = new CustomGridViewAdapter(ShowImagesActivity.this, R.layout.layout_grid_view_item, imageItems);
+        gridView.setAdapter(adapter);
+    }
 
+    private boolean checkIfOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        } else
+            return false;
     }
 
     @Override
@@ -119,12 +118,14 @@ public class ShowImagesActivity extends AppCompatActivity {
                 url = new URL(params[0]);
                 bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                 bitmap = BitmapFactory.decodeStream((InputStream) new URL(params[0]).getContent());
+            }
 
-
-            } catch (MalformedURLException e) {
+            catch (MalformedURLException e) {
                 e.printStackTrace();
                 Log.w("FlickrImages", e.getMessage());
-            } catch (IOException e) {
+            }
+
+            catch (IOException e) {
                 e.printStackTrace();
                 Log.w("FlickrImages", e.getMessage());
             }
@@ -135,11 +136,8 @@ public class ShowImagesActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
-
             imageItems.add(new ImageItem(bitmap, "Image #" + Integer.toString(imageItems.size() + 1)));
             adapter.notifyDataSetChanged();
-
-
         }
     }
 }

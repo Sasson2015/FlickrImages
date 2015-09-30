@@ -35,9 +35,11 @@ public class CustomGridViewAdapter extends ArrayAdapter {
         if (row == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
+
             holder = new ViewHolder();
             holder.imageTitle = (TextView) row.findViewById(R.id.text);
             holder.image = (ImageView) row.findViewById(R.id.image);
+
             row.setTag(holder);
         } else {
             holder = (ViewHolder) row.getTag();

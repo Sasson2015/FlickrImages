@@ -20,7 +20,6 @@ public class CountryDetails {
     public static List<String> getName() {
         return name;
     }
-
     public static List<Integer> getFlagImage() {
         return flagImage;
     }

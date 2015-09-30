@@ -34,7 +34,8 @@ public class FlickrServerAction {
             }
 
             else {
-                Log.w("FlickrImages","Flickr Server error #"+Integer.toString(con.getResponseCode()));
+                con.disconnect();
+                Log.w("FlickrImages", "Flickr Server error #" + Integer.toString(con.getResponseCode()));
                 return "Error";
             }
         } catch (Exception e) {
