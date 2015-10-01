@@ -30,4 +30,5 @@ public class ImageItem {
     public void setTitle(String title) {
         this.title = title;
     }
+
 }

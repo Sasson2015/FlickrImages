@@ -51,4 +51,23 @@ public class FlickrImageDetails {
         return url;
     }
 
+    public static List<String> getFarmID() {
+        return farmID;
+    }
+
+    public static List<String> getServerID() {
+        return serverID;
+    }
+
+    public static List<String> getImageID() {
+        return imageID;
+    }
+
+    public static List<String> getSecret() {
+        return secret;
+    }
+
+    public static void setSecret(List<String> secret) {
+        FlickrImageDetails.secret = secret;
+    }
 }

@@ -21,5 +21,6 @@
         <item>Africa</item>
         <item>USA</item>
     </string-array>
+    <string name="title_activity_view_full_image_size">ViewFullImageSizeActivity</string>
 
 </resources>

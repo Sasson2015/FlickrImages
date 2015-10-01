@@ -1,6 +1,7 @@
 package com.sassonsoft.flickrimages;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
@@ -11,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -38,8 +41,22 @@ public class ShowImagesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show_images);
 
         initializeVariables();
-        if (checkIfOnline())
+        if (checkIfOnline()) {
             new GetImagesDetailsFromServer().execute("https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + Consts.FLICKR_APP_KEY + "&tags=" + countryName + "&format=json&nojsoncallback=1");
+
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    Intent intent = new Intent(ShowImagesActivity.this, ViewFullImageSizeActivity.class);
+                    intent.putExtra("IMAGE", imageItems.get(position).getImage());
+                    startActivity(intent);
+
+                }
+            });
+
+        }
+
         else
             Toast.makeText(this, "Error: Networks isn't available", Toast.LENGTH_LONG).show();
     }
@@ -117,7 +134,7 @@ public class ShowImagesActivity extends AppCompatActivity {
             try {
                 url = new URL(params[0]);
                 bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                bitmap = BitmapFactory.decodeStream((InputStream) new URL(params[0]).getContent());
+                bitmap = BitmapFactory.decodeStream((InputStream) url.getContent());
             }
 
             catch (MalformedURLException e) {
